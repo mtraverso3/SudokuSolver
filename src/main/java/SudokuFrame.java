@@ -20,6 +20,7 @@ public class SudokuFrame
 
     JTextField[][] textFields = new JTextField[GRID_SIZE][GRID_SIZE];
     public static final JButton submit = new JButton("Submit");
+    public static final JButton reset = new JButton("Reset");
 
     public SudokuFrame()
     {
@@ -41,7 +42,9 @@ public class SudokuFrame
 
         JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         submit.addActionListener(a -> submitAction());
+        reset.addActionListener(a -> reset());
         southPanel.add(submit);
+        southPanel.add(reset);
         pane.add(southPanel);
 
         getContentPane().add(pane);
@@ -68,11 +71,22 @@ public class SudokuFrame
         fillFields(solvedGrid.getSolved());
     }
 
+    private void reset()
+    {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                textFields[row][col].setText("");
+                textFields[row][col].setEditable(true);
+            }
+        }
+    }
+
     private void fillFields(int[][] finishedSudoku)
     {
         for (int row = 0; row < GRID_SIZE; ++row) {
             for (int col = 0; col < GRID_SIZE; ++col) {
                 textFields[row][col].setText(Integer.toString(finishedSudoku[row][col]));
+                textFields[row][col].setEditable(false);
             }
         }
     }
