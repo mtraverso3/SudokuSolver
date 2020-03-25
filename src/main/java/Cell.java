@@ -26,4 +26,10 @@ public class Cell
     public Cell getNextValue(){
         return new Cell(value + 1,true);
     }
+
+    @Override
+    public String toString()
+    {
+        return Integer.toString(value);
+    }
 }
