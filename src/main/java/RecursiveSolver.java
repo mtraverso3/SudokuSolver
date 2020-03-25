@@ -37,7 +37,7 @@ public class RecursiveSolver
                 if (gridInts[row][column] == 0) {
                     for (int number = 1; number <= 9; number++) {
 
-                        if (check(row, column, number)) {
+                        if (check(number, row, column)) {
                             gridInts[row][column] = number;
 
                             if (recursiveSolve()) {
