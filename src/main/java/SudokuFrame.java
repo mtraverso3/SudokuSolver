@@ -13,8 +13,6 @@ import java.awt.GridLayout;
 public class SudokuFrame
         extends JFrame
 {
-    public SudokuGrid sudokuGrid;
-
     public static final int GRID_SIZE = 9;
     public static final int CELL_SIZE = 50;
     public static final int CANVAS_SIDE = CELL_SIZE * GRID_SIZE;
