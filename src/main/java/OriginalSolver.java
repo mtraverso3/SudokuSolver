@@ -1,8 +1,8 @@
-public class SudokuGrid
+public class OriginalSolver
 {
     public Cell[][] grid = new Cell[9][9];
 
-    SudokuGrid(Integer[][] vals)
+    OriginalSolver(Integer[][] vals)
     {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -35,7 +35,7 @@ public class SudokuGrid
         return a.toString();
     }
 
-    public SudokuGrid solveGrid()
+    public OriginalSolver solveGrid()
     {
         Coordinate currentCoord = new Coordinate(0, 0);
         Cell currentCell = grid[currentCoord.getX()][currentCoord.getY()];
