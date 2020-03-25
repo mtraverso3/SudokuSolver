@@ -1,15 +1,16 @@
 public class Cell
 {
     public final int value;
-    boolean modifiable = true;
+    final boolean modifiable;
 
     public Cell(int value, boolean modifiable)
     {
         this.value = value;
         this.modifiable = modifiable;
     }
-    public Cell(int value){
-        this.value = value;
+    public Cell(){
+        this.value = 0; //0 as a base value, will be replaced anyways in solving since its "modifiable"
+        this.modifiable = true;
     }
 
     public boolean isModifiable()
@@ -20,5 +21,9 @@ public class Cell
     public int getValue()
     {
         return this.value;
+    }
+
+    public Cell getNextValue(){
+        return new Cell(value + 1,true);
     }
 }

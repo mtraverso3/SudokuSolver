@@ -5,28 +5,44 @@
  */
 public class Coordinate
 {
-    private final int row;
-    private final int column;
+    private final int x;
+    private final int y;
 
-    public Coordinate(int row, int column)
+    public Coordinate(int x, int y)
     {
-        this.row = row;
-        this.column = column;
+        this.x = x;
+        this.y = y;
     }
 
-    public int getRow()
+    public int getX()
     {
-        return row;
+        return x;
     }
 
-    public int getColumn()
+    public int getY()
     {
-        return column;
+        return y;
+    }
+
+    public Coordinate getForward()
+    {
+        if (x == 8) {
+            return new Coordinate(0, y + 1);
+        }
+        return new Coordinate(x + 1, y);
+    }
+
+    public Coordinate getBackward()
+    {
+        if (x == 0) {
+            return new Coordinate(8, y - 1);
+        }
+        return new Coordinate(x - 1, y);
     }
 
     @Override
     public String toString()
     {
-        return String.format("(%s, %s)", row, column);
+        return String.format("(%s, %s)", x, y);
     }
 }
