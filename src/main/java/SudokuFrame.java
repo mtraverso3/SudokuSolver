@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.WindowEvent;
 
 public class SudokuFrame
         extends JFrame
@@ -42,7 +41,7 @@ public class SudokuFrame
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(northPanel);
 
-        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         submit.addActionListener(a -> submitAction());
         southPanel.add(submit);
         pane.add(southPanel);
@@ -66,10 +65,17 @@ public class SudokuFrame
                 }
             }
         }
-        sudokuGrid = new SudokuGrid(array);
-        System.out.println(sudokuGrid); //prints the modifiable spaces in a grid shape
-        SudokuGrid a = sudokuGrid.solveGrid();
-        System.out.println(a);
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        RecursiveSolver solvedGrid = new RecursiveSolver(array);
+
+        fillFields(solvedGrid.getSolved());
+    }
+
+    private void fillFields(int[][] finishedSudoku)
+    {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                textFields[row][col].setText(Integer.toString(finishedSudoku[row][col]));
+            }
+        }
     }
 }
