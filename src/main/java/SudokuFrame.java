@@ -1,14 +1,15 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
 
 public class SudokuFrame
         extends JFrame
@@ -56,7 +57,6 @@ public class SudokuFrame
 
     private void submitAction()
     {
-//        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         Integer[][] array = new Integer[GRID_SIZE][GRID_SIZE];
 
         for (int row = 0; row < GRID_SIZE; row++) {
@@ -70,5 +70,6 @@ public class SudokuFrame
         System.out.println(sudokuGrid); //prints the modifiable spaces in a grid shape
         SudokuGrid a = sudokuGrid.solveGrid();
         System.out.println(a);
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 }

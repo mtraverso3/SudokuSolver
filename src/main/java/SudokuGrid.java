@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class SudokuGrid
 {
     public Cell[][] grid = new Cell[9][9];
@@ -39,26 +37,30 @@ public class SudokuGrid
 
     public SudokuGrid solveGrid()
     {
-
         Coordinate currentCoord = new Coordinate(0, 0);
         Cell currentCell = grid[currentCoord.getX()][currentCoord.getY()];
         boolean didBacktrack = false;
 
         while (currentCoord.getY() != 9) {
-            System.out.println("a");
             if (currentCell.isModifiable()) {
                 //check values & advance/backtrack
                 if (check(currentCoord)) {
                     currentCoord = currentCoord.getForward();
                     currentCell = grid[currentCoord.getX()][currentCoord.getY()];
+//                    System.out.println(currentCoord + ", " + currentCell.value);
+                    didBacktrack = false;
                 }
                 else {
-                    while((currentCell.value != 10) && !check(currentCoord)) {
-                            currentCell = currentCell.getNextValue();
+                    while ((currentCell.value != 10) && !check(currentCoord)) {
+                        currentCell = currentCell.getNextValue();
+                        grid[currentCoord.getX()][currentCoord.getY()] = currentCell;
                         if (currentCell.value == 10) {
-                            currentCell = new Cell();
+                            grid[currentCoord.getX()][currentCoord.getY()] = new Cell();
                             currentCoord = currentCoord.getBackward();
                             currentCell = grid[currentCoord.getX()][currentCoord.getY()];
+                            currentCell = currentCell.getNextValue();
+//                            System.out.println(currentCoord + ", " + currentCell.value);
+                            didBacktrack = true;
                         }
                     }
                 }
@@ -79,38 +81,39 @@ public class SudokuGrid
 
     private boolean checkBox(Coordinate coord)
     {
-        boolean repeated = false;
+        int startX = coord.getX() - coord.getX() % 3;
+        int startY = coord.getY() - coord.getY() % 3;
 
-        for (int x = coord.getX() / 3; x < coord.getX() / 3 + 3 && !repeated; x++) {
-            if (x == coord.getX()) {x++;}
-
-            for (int y = coord.getY() / 3; y < coord.getY() / 3 + 3 && !repeated; y++) {
-                if (y == coord.getY()) {y++;}
-                repeated = grid[x][y].getValue() == grid[coord.getX()][coord.getY()].value;
+        for (int x = startX; x < startX + 3; x++) {
+            for (int y = startY; y < startY + 3; y++) {
+                if (x != coord.getX() && y != coord.getY() && grid[x][y].getValue() == grid[coord.getX()][coord.getY()].value) {
+                    return false;
+                }
             }
         }
-        return repeated;
+
+        return true;
     }
 
     private boolean checkVertical(Coordinate coord)
     {
-        int x = coord.getX();
-        boolean repeated = false;
-        for (int y = 0; y < 9 && !repeated; y++) {
-            if (y == coord.getY()) {y++;}
-            repeated = grid[x][y].value == grid[x][coord.getY()].getValue();
+        for (int y = 0; y < 9; y++) {
+            if (y != coord.getY() && grid[coord.getX()][y].value == grid[coord.getX()][coord.getY()].getValue()) {
+                return false;
+            }
         }
-        return !repeated;
+
+        return true;
     }
 
     private boolean checkHorizontal(Coordinate coord)
     {
-        int y = coord.getY();
-        boolean repeated = false;
-        for (int x = 0; x < 9 && !repeated; x++) {
-            if (x == coord.getX()) {x++;}
-            repeated = grid[x][y].value == grid[coord.getX()][y].getValue();
+        for (int x = 0; x < 9; x++) {
+            if (x != coord.getX() && grid[x][coord.getY()].value == grid[coord.getX()][coord.getY()].getValue()) {
+                return false;
+            }
         }
-        return !repeated;
+
+        return true;
     }
 }
