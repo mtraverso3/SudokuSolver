@@ -56,10 +56,10 @@ public class OriginalSolver
                     didBacktrack = false;
                 }
                 else {
-                    while ((currentCell.value != 10) && !check(currentCoord)) {
+                    while ((currentCell.getValue() != 10) && !check(currentCoord)) {
                         currentCell = currentCell.getNextValue();
                         grid[currentCoord.getX()][currentCoord.getY()] = currentCell;
-                        if (currentCell.value == 10) {
+                        if (currentCell.getValue() == 10) {
                             grid[currentCoord.getX()][currentCoord.getY()] = new Cell();
                             currentCoord = currentCoord.getBackward();
                             currentCell = grid[currentCoord.getX()][currentCoord.getY()];
@@ -91,7 +91,7 @@ public class OriginalSolver
 
         for (int x = startX; x < startX + 3; x++) {
             for (int y = startY; y < startY + 3; y++) {
-                if (x != coord.getX() && y != coord.getY() && grid[x][y].getValue() == grid[coord.getX()][coord.getY()].value) {
+                if (x != coord.getX() && y != coord.getY() && grid[x][y].getValue() == grid[coord.getX()][coord.getY()].getValue()) {
                     return false;
                 }
             }
@@ -103,7 +103,7 @@ public class OriginalSolver
     private boolean checkVertical(Coordinate coord)
     {
         for (int y = 0; y < 9; y++) {
-            if (y != coord.getY() && grid[coord.getX()][y].value == grid[coord.getX()][coord.getY()].getValue()) {
+            if (y != coord.getY() && grid[coord.getX()][y].getValue() == grid[coord.getX()][coord.getY()].getValue()) {
                 return false;
             }
         }
@@ -114,7 +114,7 @@ public class OriginalSolver
     private boolean checkHorizontal(Coordinate coord)
     {
         for (int x = 0; x < 9; x++) {
-            if (x != coord.getX() && grid[x][coord.getY()].value == grid[coord.getX()][coord.getY()].getValue()) {
+            if (x != coord.getX() && grid[x][coord.getY()].getValue() == grid[coord.getX()][coord.getY()].getValue()) {
                 return false;
             }
         }
