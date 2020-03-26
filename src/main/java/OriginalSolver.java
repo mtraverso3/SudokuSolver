@@ -1,3 +1,8 @@
+/**
+ * First attempt at Solving the Sudoku. There's still some bug somewhere.
+ *
+ * @author Marcos Traverso
+ */
 public class OriginalSolver
 {
     public Cell[][] grid = new Cell[9][9];

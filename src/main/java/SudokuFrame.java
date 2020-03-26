@@ -10,23 +10,29 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+/**
+ * This class generates the JFrame window. It creates a grid of TextFields and two buttons.
+ * The maze is solved once the submit button is pressed, triggering submitAction()
+ *
+ * @author Marcos Traverso
+ */
 public class SudokuFrame
         extends JFrame
 {
     public static final int GRID_SIZE = 9;
-    public static final int CELL_SIZE = 50;
-    public static final int CANVAS_SIDE = CELL_SIZE * GRID_SIZE;
-    public static final Font FONT_NUMBERS = new Font("Monospaced", Font.BOLD, CELL_SIZE / 2);
+    private static final int CELL_SIZE = 50;
+    private static final int CANVAS_SIDE = CELL_SIZE * GRID_SIZE;
+    private static final Font FONT_NUMBERS = new Font("Monospaced", Font.BOLD, CELL_SIZE / 2);
 
-    JTextField[][] textFields = new JTextField[GRID_SIZE][GRID_SIZE];
-    public static final JButton submit = new JButton("Submit");
-    public static final JButton reset = new JButton("Reset");
+    private JTextField[][] textFields = new JTextField[GRID_SIZE][GRID_SIZE];
+    private static final JButton submit = new JButton("Submit");
+    private static final JButton reset = new JButton("Reset");
 
     public SudokuFrame()
     {
 
         JPanel northPanel = new JPanel(new GridLayout(GRID_SIZE, GRID_SIZE));
-        for (int row = 0; row < GRID_SIZE; ++row) {
+        for (int row = 0; row < GRID_SIZE; ++row) {     //generates a 3x3 array of TextFields
             for (int col = 0; col < GRID_SIZE; ++col) {
                 textFields[row][col] = new JTextField();
                 textFields[row][col].setHorizontalAlignment(JTextField.CENTER);
@@ -38,9 +44,9 @@ public class SudokuFrame
         }
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(northPanel);
+        pane.add(northPanel);   //northPanel for TextFields grid
 
-        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));  //southPanel for buttons
         submit.addActionListener(a -> submitAction());
         reset.addActionListener(a -> reset());
         southPanel.add(submit);
@@ -55,6 +61,9 @@ public class SudokuFrame
         setVisible(true);
     }
 
+    /**
+     * Reads the TextFields and calls the solver with them.
+     */
     private void submitAction()
     {
         Integer[][] array = new Integer[GRID_SIZE][GRID_SIZE];
@@ -66,11 +75,14 @@ public class SudokuFrame
                 }
             }
         }
-        RecursiveSolver solvedGrid = new RecursiveSolver(array);
+        RecursiveSolver solvedGrid = new RecursiveSolver(array);    //uses RecursiveSolver, not OriginalSolver
 
         fillFields(solvedGrid.getSolved());
     }
 
+    /**
+     * Sets the text within the TextFields as empty and sets them as modifiable
+     */
     private void reset()
     {
         for (int row = 0; row < GRID_SIZE; ++row) {
@@ -81,6 +93,11 @@ public class SudokuFrame
         }
     }
 
+    /**
+     * Fills the text within the TextFields with the solution and sets them as not modifiable.
+     *
+     * @param finishedSudoku Solved sudoku puzzle as an array.
+     */
     private void fillFields(int[][] finishedSudoku)
     {
         for (int row = 0; row < GRID_SIZE; ++row) {

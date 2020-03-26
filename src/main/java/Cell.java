@@ -1,7 +1,7 @@
 public class Cell
 {
-    public final int value;
-    final boolean modifiable;
+    private final int value;
+    private final boolean modifiable;
 
     public Cell(int value, boolean modifiable)
     {

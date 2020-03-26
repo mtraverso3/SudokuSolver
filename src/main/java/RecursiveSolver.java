@@ -1,11 +1,11 @@
 /**
- * Modified version of the other 'Solver' that uses recursion instead.
+ * Modified version of the other 'Solver'. This one uses recursion instead.
  *
  * @author Marcos Traverso
  */
 public class RecursiveSolver
 {
-    public int[][] gridInts = new int[9][9];
+    private int[][] gridInts = new int[9][9];
 
     RecursiveSolver(Integer[][] vals)
     {
@@ -29,7 +29,7 @@ public class RecursiveSolver
         return gridInts;
     }
 
-    public boolean recursiveSolve()
+    private boolean recursiveSolve()
     {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
@@ -44,7 +44,7 @@ public class RecursiveSolver
                                 return true;
                             }
                             else {
-                                gridInts[row][column] = 0;
+                                gridInts[row][column] = 0;      //set as 0 to reset them
                             }
                         }
                     }
@@ -61,6 +61,12 @@ public class RecursiveSolver
         return checkBox(val, x, y) && checkVertical(val, x, y) && checkHorizontal(val, x, y);
     }
 
+    /**
+     * This method checks if a value appears within the 3x3 Sudoku box.
+     * @param val value to be checked
+     * @param xIn base x coordinate
+     * @param yIn base y coordinate
+     */
     private boolean checkBox(int val, int xIn, int yIn)
     {
         int startX = xIn - xIn % 3;
